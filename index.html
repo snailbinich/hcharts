@@ -7,6 +7,8 @@
     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/highcharts.js"></script>
+    <script type="text/javascript" src="js/hchartsTheme.js"></script>
+    
     
     <style type="text/css">
         .row {text-align: center}
@@ -24,52 +26,43 @@
             <th>子类</th>
             <th>数据状态</th>
             <th>备份状态</th>
-            <th>hide</th>
         </tr>
         <tr>
             <td rowspan="4">日志</td>
             <td> 前端流量日志</td>
             <td> 7 / 463</td>
             <td>11 / 280</td>
-            <td></td>
         </tr>
         <tr>
-
             <td>用户点击日志</td>
             <td> 0 / 379</td>
             <td>2 / 379</td>
-            <td></td>
         </tr>
         <tr>
 
             <td>搜索日志</td>
             <td>12 / 659</td>
             <td>0 / 0</td>
-            <td></td>
         </tr>
         <tr>
             <td>系统内部日志</td>
             <td>0 / 14</td>
             <td>0 / 14</td>
-            <td></td>
         </tr>
         <tr>
             <td>中间策略数据</td>
             <td>中间策略数据</td>
             <td>11 / 893</td>
             <td>0 / 893</td>
-            <td></td>
         </tr>
         <tr>
             <td rowspan="3">用户数据</td>
             <td>用户信息</td>
             <td>0 / 27</td>
             <td>1 / 27</td>
-            <td></td>
         </tr>
         <tr>
             <td>用户数据</td>
-            <td></td>
             <td></td>
             <td></td>
         </tr>
@@ -77,17 +70,14 @@
             <td>客户数据</td>
             <td></td>
             <td></td>
-            <td></td>
         </tr>
         <tr>
             <td rowspan="2">系统运行数据</td>
             <td>程序配置</td>
             <td></td>
-            <td></td>
         </tr>
         <tr>
             <td>系统数据</td>
-            <td></td>
             <td></td>
             <td></td>
         </tr>
@@ -95,20 +85,24 @@
             <td rowspan="2">操作系统数据</td>
             <td>操作系统审计日志</td>
             <td></td>
-            <td></td>
         </tr>
         <tr>
             <td>内网Relay日志</td>
-            <td></td>
             <td></td>
             <td></td>
         </tr>
     </table>
   </div>
   <div class="span8">
-     <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto">
-     </div> 
+    
   </div>
+</div>
+<div class="row">
+      <div class="span12 offset2">
+    <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto">
+     </div> 
+      </div>
+   
 </div>
 
 
@@ -130,29 +124,30 @@ $(function () {
             xAxis: [{
                 categories: ['前端流量日志','用户点击日志','搜索日志', '系统内部日志']
             }],
-            yAxis: [{ // Primary yAxis
+            yAxis: [
+            { // Secondary yAxis
                 labels: {
                     formatter: function() {
                         return this.value +'T';
                     },
                     style: {
-                        color: '#89A54E'
+                        color: '#4572A7'
                     }
                 },
                 title: {
                     text: '容量',
                     style: {
-                        color: '#89A54E'
-                    }
-                },
-                opposite: true
-    
-            }, { // Secondary yAxis
-                gridLineWidth: 0,
-                title: {
-                    text: 'Rainfall',
-                    style: {
                         color: '#4572A7'
+                    }
+                }
+    
+            },
+             { // Primary yAxis
+                gridLineWidth: 2,
+                title: {
+                    text: 'number',
+                    style: {
+                        color: '#AA4643'
                     }
                 },
                 labels: {
@@ -160,29 +155,29 @@ $(function () {
                         return this.value +' 个';
                     },
                     style: {
-                        color: '#4572A7'
+                        color: '#AA4643'
                     }
-                }
+                },
+                opposite: true
     
             }],
-            tooltip: {
-                formatter: function() {
-                    var unit = {
-                        'Rainfall': 'mm',
-                        'Temperature': '°C'
-                    }[this.series.name];
-    
-                    return ''+
-                        this.x +': '+ this.y +' '+ unit;
+            plotOptions: {
+                column: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true,
+                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                    }
+                },
+                line:{
+                    dataLabels: {
+                        enabled: true
+                    }
+
                 }
             },
             legend: {
-                layout: 'vertical',
-                align: 'left',
-                x: 120,
-                verticalAlign: 'top',
-                y: 80,
-                floating: true,
+
                 backgroundColor: '#FFFFFF'
             },
             series: [{
@@ -194,14 +189,13 @@ $(function () {
     
             }, {
                 name: '文件数量',
-                type: 'spline',
+                type: 'line',
                 color: '#AA4643',
                 yAxis: 1,
-                data: [1016, 1016, 1015.9, 1015.5],
+                data: [1016, 1000, 1015.9, 1015.5],
                 marker: {
-                    enabled: false
-                },
-                dashStyle: 'shortdot'
+                    enabled: true
+                }
     
             }]
         });
